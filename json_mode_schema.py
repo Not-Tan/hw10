@@ -1,7 +1,9 @@
 from litellm import completion
 from config import MODEL
 import json
-
+# import litellm
+# litellm._turn_on_debug()
+# TODO: define order_id, customer (object), items (array of objects), total (number), currency (string)
 schema = {
   "name": "OrderExtraction",
   "schema": {
@@ -26,7 +28,6 @@ schema = {
         }},
         "total": {"type": "number"},
         "currency": {"type": "string"}
-      # TODO: define order_id, customer (object), items (array of objects), total (number), currency (string)
     },
     "required": ["order_id","customer","items","total","currency"],
     "additionalProperties": False
@@ -35,8 +36,8 @@ schema = {
 }
 
 messages = [
-  {"role":"system","content":"Return ONLY a JSON object matching the schema."},
-  {"role":"user","content":"Order A-1029 by Sarah Johnson : 2x Water Bottle ($12.50 each), 1x Carrying Pouch ($5). Total $30."}
+  {"role": "system", "content": "Return ONLY a JSON object matching the schema."},
+  {"role": "user", "content": "Extract: Sarah Johnson, 28, sj@example.com; likes smartphones and tablets."}
 ]
 
 resp = completion(
